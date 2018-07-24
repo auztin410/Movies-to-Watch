@@ -1,0 +1,86 @@
+<h1>Movies to See!</h1>
+
+<ul>
+    {{#each to_see_list}}
+    <li>
+        <p>
+            {{id}}. {{name}}
+
+            <button data-nameid="{{id}}" class="removename">Remove Movie</button>
+        </p>
+    </li>
+    {{/each}}
+</ul>
+
+<h2>Add a Move You Would Like to See!</h2>
+<form id="addmovie" class="button-size">
+    <textarea type="text" name="name"></textarea>
+    <button type="submit">Add Movie!</button>
+</form>
+
+<h2>Update a Movie</h2>
+<form id="updatemovie" class="button-size">
+    <select name="id">
+        {{#each to_see_list}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select>
+    <textarea type="text" name="name" placeholder="Movie Name"></textarea>
+    <button type="submit">Update Movie!</button>
+</form>
+
+<script type="text/javascript">
+    $(".removename").on("click", function(event){
+        var id = $(this).data("nameid");
+
+        $.ajax("/tosee/" + id, {
+            type: "DELETE"
+        }).then(
+            function() {
+                console.log("deleted id ", id);
+
+                location.reload();
+            }
+        );
+    });
+
+    $("#addmovie").on("submit", function(event){
+        event.preventDefault();
+
+        var newMovie = {
+            name: $("#addmovie [name=name").val().trim()
+        };
+
+        $.ajax("/tosee", {
+            type: "POST",
+            data: newMovie
+        }).then(
+            function(){
+                console.log("added new movie.");
+
+                location.reload();
+            }
+        );
+    });
+
+    $("#updatemovie").on("submit", function(event){
+        event.preventDefault();
+
+        var id = $("[name=id").val().trim();
+
+        var updatedMovie = {
+            name: $("#updatemovie [name=name").val().trim()
+        };
+
+        $.ajax("/tosee/" + id, {
+            type: "PUT",
+            data: updatedMovie
+        }).then(
+            function(){
+                console.log("updated id", id);
+
+                location.reload();
+            }
+        );
+    });
+</script>
