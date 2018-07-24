@@ -100,6 +100,20 @@ app.delete("/tosee/:id", function(req, res){
     });
 });
 
+
+app.put("/tosee/:id", function(req, res){
+    
+    connection.query("UPDATE to_see_list SET name = ? WHERE id = ?", [req.body.name, req.params.id], function(err, result){
+        if(err){
+            return res.status(500).end();
+        }
+        else if(result.changedRows === 0){
+            return res.status(404).end();
+        }
+        res.status(200).end();
+    });
+});
+
 app.listen(PORT, function(){
     console.log("Server listening on: http://localhost:" + PORT);
 });

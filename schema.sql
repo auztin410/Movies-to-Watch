@@ -7,6 +7,7 @@ USE movies_to_watch_DB;
 CREATE TABLE to_see_list (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(125) NOT NULL,
+    watched BOOLEAN NOT NULL DEFAULT FALSE;
     PRIMARY KEY (id)
 );
 

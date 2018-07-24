@@ -7,6 +7,7 @@
             {{id}}. {{name}}
 
             <button data-nameid="{{id}}" class="removename">Remove Movie</button>
+            <button data-watchid="{{id}}" class="watchmovie">Watched This Movie!</button>
         </p>
     </li>
     {{/each}}
@@ -44,11 +45,32 @@
         );
     });
 
+    $(".watchmovie").on("click", function(event){
+        event.preventDefault();
+
+        var id = $(this).data("watchid");
+
+        var watchedMovie = {
+            watched: true
+        };
+
+        $.ajax("/watched/" + id, {
+            type: "PUT",
+            data: watchedMovie
+        }).then(
+            function(){
+                console.log("you watched this movie id ". id);
+
+                location.reload();
+            }
+        );
+    });
+
     $("#addmovie").on("submit", function(event){
         event.preventDefault();
 
         var newMovie = {
-            name: $("#addmovie [name=name").val().trim()
+            name: $("#addmovie [name=name]").val().trim()
         };
 
         $.ajax("/tosee", {
@@ -67,6 +89,7 @@
         event.preventDefault();
 
         var id = $("[name=id").val().trim();
+        
 
         var updatedMovie = {
             name: $("#updatemovie [name=name").val().trim()
@@ -77,7 +100,7 @@
             data: updatedMovie
         }).then(
             function(){
-                console.log("updated id", id);
+                
 
                 location.reload();
             }
