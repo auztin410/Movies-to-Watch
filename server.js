@@ -31,7 +31,7 @@ var connection = mysql.createConnection({
     port: 3306,
     user: "root",
     password: "root",
-    database: "movies-to-watch-DB"
+    database: "movies_to_watch_DB"
 });
 
 
@@ -55,7 +55,7 @@ app.get("/", function(req, res){
             return res.status(500).end();
         }
 
-        res.render("index", {movies_to_see: data});
+        res.render("index", {to_see_list: data});
     });
 });
 
@@ -87,7 +87,7 @@ app.get("/tosee", function(req, res){
 });
 
 
-app.delete("tosee/:id", function(req, res){
+app.delete("/tosee/:id", function(req, res){
     connection.query("DELETE FROM to_see_list WHERE id = ?", [req.params.id], function(err, result){
         if(err){
             return res.status(500).end();
