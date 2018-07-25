@@ -4,6 +4,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var exphbs = require("express-handlebars");
 var mysql = require("mysql");
+var request = require("request");
 
 
 // Setting up port for Heroku.
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 app.engine("handlebars", exphbs({ defaultLayout: "main"}));
 app.set("view engine", "handlebars");
+app.use(express.static('public'));
 
 
 // Setting up our mysql database information.
@@ -58,6 +60,8 @@ app.get("/", function(req, res){
         res.render("index", {to_see_list: data});
     });
 });
+
+
 
 
 // Adding a new movie to the to_see_list
@@ -113,6 +117,30 @@ app.put("/tosee/:id", function(req, res){
         res.status(200).end();
     });
 });
+
+
+app.get("/search/:movie", function(req, res){
+
+    var searchMovie = req.params.movie;
+    console.log(req.params.movie);
+    console.log(searchMovie);
+
+    var queryUrl = "http://www.omdbapi.com/?t=" + searchMovie + "&y=&plot=short&apikey=trilogy";
+
+    request(queryUrl, function (error, response, body) {
+
+        var jsonData = JSON.parse(body);
+
+        console.log(jsonData);
+
+        res.json(jsonData);
+    });
+});
+
+
+
+        
+
 
 app.listen(PORT, function(){
     console.log("Server listening on: http://localhost:" + PORT);

@@ -1,43 +1,100 @@
-<h1>Movies to See!</h1>
+<div class="grid-container">
 
-<ul>
-    {{#each to_see_list}}
-    <li>
-        <p>
-            {{id}}. {{name}}
 
-            <button data-nameid="{{id}}" class="removename">Remove Movie</button>
-            <button data-watchid="{{id}}" class="watchmovie">Watched This Movie!</button>
-        </p>
-    </li>
-    {{/each}}
-</ul>
+    <div class="omdb">
+        <h1>Search for a Movie!</h1>
+        <form id="searchmovie" class="button-size">
+            <textarea type="text" name="movie"></textarea>
+            <button type="submit">Search for Movie!</button>
+            {{jsonData}}
+            {{Title}}
+        </form>
+    </div>
 
-<h2>Add a Move You Would Like to See!</h2>
-<form id="addmovie" class="button-size">
-    <textarea type="text" name="name"></textarea>
-    <button type="submit">Add Movie!</button>
-</form>
 
-<h2>Update a Movie</h2>
-<form id="updatemovie" class="button-size">
-    <select name="id">
-        {{#each to_see_list}}
-        <option value="{{id}}">{{name}}</option>
-        {{/each}}
-    </select>
-    <textarea type="text" name="name" placeholder="Movie Name"></textarea>
-    <button type="submit">Update Movie!</button>
-</form>
+    <div class="tosee">
+        <h1>Movies to See!</h1>
+
+        <ul>
+            {{#each to_see_list}} {{#unless watched}}
+            <li>
+                <p>
+                    {{id}}. {{name}}
+
+                    <button data-nameid="{{id}}" class="removename">Remove Movie</button>
+                    <button data-watchid="{{id}}" class="watchmovie">Watched This Movie!</button>
+                </p>
+            </li>
+            {{/unless}} {{/each}}
+        </ul>
+    </div>
+
+    <div class="seen">
+        <h1>Movies You have Watched Already.</h1>
+        <ul>
+            {{#each to_see_list}} {{#if watched}}
+            <li>
+                <p>
+                    {{id}}. {{name}}
+
+                    <button data-nameid="{{id}}" class="removename">Remove Movie</button>
+                    <button data-watchid="{{id}}" class="watchmovie">Watched This Movie!</button>
+                </p>
+            </li>
+            {{/if}} {{/each}}
+        </ul>
+    </div>
+
+
+    <div class="addmovie">
+        <h2>Add a Move You Would Like to See!</h2>
+        <form id="addmovie" class="button-size">
+            <textarea type="text" name="name"></textarea>
+            <button type="submit">Add Movie!</button>
+        </form>
+    </div>
+
+    <div class="updatemovie">
+        <h2>Update a Movie</h2>
+        <form id="updatemovie" class="button-size">
+            <select name="id">
+                {{#each to_see_list}}
+                <option value="{{id}}">{{name}}</option>
+                {{/each}}
+            </select>
+            <textarea type="text" name="name" placeholder="Movie Name"></textarea>
+            <button type="submit">Update Movie!</button>
+        </form>
+    </div>
+
+</div>
 
 <script type="text/javascript">
-    $(".removename").on("click", function(event){
+
+    $("#searchmovie").on("submit", function (event) {
+        event.preventDefault();
+
+        var searchMovie = $("#searchmovie [name=movie]").val().trim();
+        
+
+        $.ajax("/search/" + searchMovie, {
+            type: "GET"
+        }).then(
+            function(){
+                console.log("Searching for: " + searchMovie);
+
+                location.reload();
+            }
+        );
+    });
+
+    $(".removename").on("click", function (event) {
         var id = $(this).data("nameid");
 
         $.ajax("/tosee/" + id, {
             type: "DELETE"
         }).then(
-            function() {
+            function () {
                 console.log("deleted id ", id);
 
                 location.reload();
@@ -45,7 +102,7 @@
         );
     });
 
-    $(".watchmovie").on("click", function(event){
+    $(".watchmovie").on("click", function (event) {
         event.preventDefault();
 
         var id = $(this).data("watchid");
@@ -58,15 +115,15 @@
             type: "PUT",
             data: watchedMovie
         }).then(
-            function(){
-                console.log("you watched this movie id ". id);
+            function () {
+                console.log("you watched this movie id ".id);
 
                 location.reload();
             }
         );
     });
 
-    $("#addmovie").on("submit", function(event){
+    $("#addmovie").on("submit", function (event) {
         event.preventDefault();
 
         var newMovie = {
@@ -77,7 +134,7 @@
             type: "POST",
             data: newMovie
         }).then(
-            function(){
+            function () {
                 console.log("added new movie.");
 
                 location.reload();
@@ -85,11 +142,11 @@
         );
     });
 
-    $("#updatemovie").on("submit", function(event){
+    $("#updatemovie").on("submit", function (event) {
         event.preventDefault();
 
         var id = $("[name=id").val().trim();
-        
+
 
         var updatedMovie = {
             name: $("#updatemovie [name=name").val().trim()
@@ -99,8 +156,8 @@
             type: "PUT",
             data: updatedMovie
         }).then(
-            function(){
-                
+            function () {
+
 
                 location.reload();
             }

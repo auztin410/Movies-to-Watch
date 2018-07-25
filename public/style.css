@@ -1,0 +1,57 @@
+body{
+
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 31% 31% 31%;
+    grid-template-rows: 550px 120px;
+    grid-gap: 20px;
+    margin-left: 4%;
+    margin-top: 2%;
+}
+
+.omdb {
+    grid-area: 1 / 1 / span 2 / span 1;
+    border: 5px;
+    border-style: inset;
+    border-radius: 5px;
+    border-color: rgb(182, 174, 174);
+    text-align: center;
+}
+
+.tosee {
+    grid-area: 1 / 2 / span 1 / span 1;
+    border: 5px;
+    border-style: inset;
+    border-radius: 5px;
+    border-color: rgb(182, 174, 174);
+    text-align: center;
+}
+
+.seen {
+    grid-area: 1 / 3 / span 1 / span 1;
+    border: 5px;
+    border-style: inset;
+    border-radius: 5px;
+    border-color: rgb(182, 174, 174);
+    text-align: center;
+}
+
+.addmovie {
+    grid-area: 2 / 2 / span 1 / span 1;
+    border: 5px;
+    border-style: inset;
+    border-radius: 5px;
+    border-color: rgb(182, 174, 174);
+    text-align: center;
+}
+
+.updatemovie {
+    grid-area: 2 / 3 / span 1 / span 1;
+    border: 5px;
+    border-style: inset;
+    border-radius: 5px;
+    border-color: rgb(182, 174, 174);
+    text-align: center;
+}
