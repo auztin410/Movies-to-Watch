@@ -1,11 +1,32 @@
-body{
+body {
+    background-color: white;
+}
 
+h2 {
+    font-family: 'Bungee Inline', cursive;
+}
+
+span {
+    font-family: 'Russo One', sans-serif;
+}
+
+img {
+    border: 5px;
+    border-style: inset;
+    border-radius: 5px;
+}
+
+button {
+    border: 5px;
+    border-style: outset;
+    border-radius: 5px;
+    background-color: white;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: 31% 31% 31%;
-    grid-template-rows: 550px 120px;
+    /* grid-template-rows: 550px 120px; */
     grid-gap: 20px;
     margin-left: 4%;
     margin-top: 2%;
@@ -18,6 +39,9 @@ body{
     border-radius: 5px;
     border-color: rgb(182, 174, 174);
     text-align: center;
+    background-color: whitesmoke;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .tosee {
@@ -27,6 +51,7 @@ body{
     border-radius: 5px;
     border-color: rgb(182, 174, 174);
     text-align: center;
+    background-color: whitesmoke;
 }
 
 .seen {
@@ -36,6 +61,7 @@ body{
     border-radius: 5px;
     border-color: rgb(182, 174, 174);
     text-align: center;
+    background-color: whitesmoke;
 }
 
 .addmovie {
@@ -45,6 +71,7 @@ body{
     border-radius: 5px;
     border-color: rgb(182, 174, 174);
     text-align: center;
+    background-color: whitesmoke;
 }
 
 .updatemovie {
@@ -54,4 +81,5 @@ body{
     border-radius: 5px;
     border-color: rgb(182, 174, 174);
     text-align: center;
+    background-color: whitesmoke;
 }

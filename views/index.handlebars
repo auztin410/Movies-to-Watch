@@ -2,11 +2,11 @@
 
 
     <div class="omdb">
-        <h1>Search for a Movie!</h1>
+        <h2>Search for a Movie!</h2>
         <form id="searchmovie" class="button-size">
-            <textarea type="text" name="movie"></textarea>
+            <input type="text" name="movie"></input>
             <button type="submit">Search for Movie!</button>
-
+            <div class="movieinfo"></div>
 
 
         </form>
@@ -14,7 +14,7 @@
 
 
     <div class="tosee">
-        <h1>Movies to See!</h1>
+        <h2>Movies to See!</h2>
 
         <ul>
             {{#each to_see_list}} {{#unless watched}}
@@ -22,8 +22,8 @@
                 <p>
                     {{id}}. {{name}}
 
-                    <button data-nameid="{{id}}" class="removename">Remove Movie</button>
-                    <button data-watchid="{{id}}" class="watchmovie">Watched This Movie!</button>
+                    <button data-nameid="{{id}}" class="removename">Remove</button>
+                    <button data-watchid="{{id}}" class="watchmovie">Watched</button>
                 </p>
             </li>
             {{/unless}} {{/each}}
@@ -31,15 +31,15 @@
     </div>
 
     <div class="seen">
-        <h1>Movies You have Watched Already.</h1>
+        <h2>Already Watched!</h2>
         <ul>
             {{#each to_see_list}} {{#if watched}}
             <li>
                 <p>
                     {{id}}. {{name}}
 
-                    <button data-nameid="{{id}}" class="removename">Remove Movie</button>
-                    <button data-watchid="{{id}}" class="watchmovie">Watched This Movie!</button>
+                    <button data-nameid="{{id}}" class="removename">Remove</button>
+                    
                 </p>
             </li>
             {{/if}} {{/each}}
@@ -48,11 +48,12 @@
 
 
     <div class="addmovie">
-        <h2>Add a Move You Would Like to See!</h2>
+        <h2>Add a Movie to Watch!</h2>
         <form id="addmovie" class="button-size">
-            <textarea type="text" name="name"></textarea>
+            <input type="text" name="name"></input>
             <button type="submit">Add Movie!</button>
         </form>
+        <br>
     </div>
 
     <div class="updatemovie">
@@ -63,9 +64,10 @@
                 <option value="{{id}}">{{name}}</option>
                 {{/each}}
             </select>
-            <textarea type="text" name="name" placeholder="Movie Name"></textarea>
+            <input type="text" name="name" placeholder="Movie Name"></input>
             <button type="submit">Update Movie!</button>
         </form>
+        <br>
     </div>
 
 </div>
@@ -88,16 +90,21 @@
                 var movieinfo = $("<div>");
                 movieinfo.addClass("movieinfo");
 
-                movieinfo.append("<h1>Title: " + result.Title + "</h1>");
-                movieinfo.append("<p>Date of Release: " + result.Released + "</p>");
-                movieinfo.append("<p>Rated: " + result.Rated + "</p>");
-                movieinfo.append("<p>Runtime: " + result.Runtime + "</p>");
-                movieinfo.append("<p>Directed by: " + result.Director + "</p>");
-                movieinfo.append("<p>Actors: " + result.Actors + "</p>");
-                movieinfo.append("<p>Plot: " + result.Plot + "</p>");     
+                movieinfo.append("<br>");
+                movieinfo.append("<img src='" + result.Poster + "'>");
+                movieinfo.append("<p><span>Title: </span>" + result.Title + "</p>");
+                movieinfo.append("<p><span>Date of Release: </span>" + result.Released + "</p>");
+                movieinfo.append("<p><span>Rated: </span>" + result.Rated + "</p>");
+                movieinfo.append("<p><span>Runtime: </span>" + result.Runtime + "</p>");
+                movieinfo.append("<p><span>Directed by: </span>" + result.Director + "</p>");
+                movieinfo.append("<p><span>Actors: </span>" + result.Actors + "</p>");
+                movieinfo.append("<p><span>Plot: </span>" + result.Plot + "</p>");
+                movieinfo.append("<p><span>Awards: </span>" + result.Awards + "</p>");
+                movieinfo.append("<p><span>MetaScore: </span>" + result.Metascore + "</p>");
+                movieinfo.append("<p><span>Imdb Rating: </span>" + result.imdbRating + "</p>");    
 
 
-                $(".omdb").append(movieinfo);
+                $(".movieinfo").html(movieinfo);
             }
         );
     });
