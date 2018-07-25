@@ -122,17 +122,19 @@ app.put("/tosee/:id", function(req, res){
 app.get("/search/:movie", function(req, res){
 
     var searchMovie = req.params.movie;
-    
+    var jsonData;
+
     var queryUrl = "http://www.omdbapi.com/?t=" + searchMovie + "&y=&plot=short&apikey=trilogy";
 
     request(queryUrl, function (error, response, body) {
 
-        var jsonData = JSON.parse(body);
+        jsonData = JSON.parse(body);
 
         console.log(jsonData);
 
-        res.render("index", jsonData);
+        res.send(jsonData);
     });
+    
 });
 
 

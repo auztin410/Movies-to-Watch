@@ -6,8 +6,9 @@
         <form id="searchmovie" class="button-size">
             <textarea type="text" name="movie"></textarea>
             <button type="submit">Search for Movie!</button>
-            {{jsonData}}
-            
+
+
+
         </form>
     </div>
 
@@ -75,15 +76,28 @@
         event.preventDefault();
 
         var searchMovie = $("#searchmovie [name=movie]").val().trim();
-        
+
 
         $.ajax("/search/" + searchMovie, {
             type: "GET"
         }).then(
-            function(){
+            function (result) {
                 console.log("Searching for: " + searchMovie);
+                console.log(result);
 
-                location.reload();
+                var movieinfo = $("<div>");
+                movieinfo.addClass("movieinfo");
+
+                movieinfo.append("<h1>Title: " + result.Title + "</h1>");
+                movieinfo.append("<p>Date of Release: " + result.Released + "</p>");
+                movieinfo.append("<p>Rated: " + result.Rated + "</p>");
+                movieinfo.append("<p>Runtime: " + result.Runtime + "</p>");
+                movieinfo.append("<p>Directed by: " + result.Director + "</p>");
+                movieinfo.append("<p>Actors: " + result.Actors + "</p>");
+                movieinfo.append("<p>Plot: " + result.Plot + "</p>");     
+
+
+                $(".omdb").append(movieinfo);
             }
         );
     });
