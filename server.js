@@ -155,7 +155,18 @@ app.post("/add/", function(req, res){
     });
 });
 
-        
+app.put("/watched/:id", function(req, res){
+    console.log(req.params.id);
+    connection.query("UPDATE to_see_list SET watched = ? WHERE id = ?", [true, req.params.id], function(err, result){
+        if(err){
+            return res.status(500).end();
+        }
+        else if(result.changedRows === 0){
+            return res.status(404).end();
+        }
+        res.status(200).end();
+    })
+})        
 
 
 app.listen(PORT, function(){
