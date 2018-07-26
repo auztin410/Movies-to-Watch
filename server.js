@@ -27,14 +27,21 @@ app.use(express.static('public'));
 
 
 // Setting up our mysql database information.
+var connection;
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "root",
-    database: "movies_to_watch_DB"
-});
+if(process.env.JAWSDB_URL){
+    connection = mysql.createConnection(process.env.JAWSDB_URL);
+}else{
+        connection = mysql.createConnection({
+        host: "localhost",
+        port: 3306,
+        user: "root",
+        password: "root",
+        database: "movies_to_watch_DB"
+    });
+}
+
+
 
 
 // Connecting to the sql database.
