@@ -100,7 +100,7 @@ app.delete("/tosee/:id", function(req, res){
             return res.status(404).end();
         }
         res.status(200).end();
-        console.log(result);
+        
     });
 });
 
@@ -130,14 +130,23 @@ app.get("/search/:movie", function(req, res){
 
         jsonData = JSON.parse(body);
 
-        console.log(jsonData);
+        
 
         res.send(jsonData);
     });
     
 });
 
+app.post("/add/", function(req, res){
+    connection.query("INSERT INTO to_see_list (name) VALUES (?)", [req.body.name], function(err, result){
+        if(err){
+            return res.status(500).end();
+        }
 
+        res.json({ id: result.insertId });
+        
+    });
+});
 
         
 

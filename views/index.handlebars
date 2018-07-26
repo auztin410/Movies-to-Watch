@@ -6,10 +6,9 @@
         <form id="searchmovie" class="button-size">
             <input type="text" name="movie"></input>
             <button type="submit">Search for Movie!</button>
-            <div class="movieinfo"></div>
-
-
         </form>
+
+        <div class="movieinfo"></div>
     </div>
 
 
@@ -39,7 +38,7 @@
                     {{id}}. {{name}}
 
                     <button data-nameid="{{id}}" class="removename">Remove</button>
-                    
+
                 </p>
             </li>
             {{/if}} {{/each}}
@@ -74,6 +73,9 @@
 
 <script type="text/javascript">
 
+    var movie;
+
+
     $("#searchmovie").on("submit", function (event) {
         event.preventDefault();
 
@@ -101,13 +103,41 @@
                 movieinfo.append("<p><span>Plot: </span>" + result.Plot + "</p>");
                 movieinfo.append("<p><span>Awards: </span>" + result.Awards + "</p>");
                 movieinfo.append("<p><span>MetaScore: </span>" + result.Metascore + "</p>");
-                movieinfo.append("<p><span>Imdb Rating: </span>" + result.imdbRating + "</p>");    
+                movieinfo.append("<p><span>Imdb Rating: </span>" + result.imdbRating + "</p>");
+                movieinfo.append("<button type='submit' id='add'>Add to list</button>");
+                movieinfo.append("<br>");
+                movieinfo.append("<br>");
 
 
                 $(".movieinfo").html(movieinfo);
+
+                $("#add").on("click", function (event) {
+        
+
+                    movie = result.Title;
+                    console.log(movie);
+
+                    var newMovie = {
+                        name: movie
+                    };
+
+                    $.ajax("/add/", {
+                        type: "POST", 
+                        data: newMovie
+                        
+                    }).then(
+                        function () {
+                            console.log("You add " + movie + " to your list to see.");
+
+                            location.reload();
+                        }
+                    );
+                });
             }
         );
     });
+
+
 
     $(".removename").on("click", function (event) {
         var id = $(this).data("nameid");
